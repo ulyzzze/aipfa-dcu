@@ -1,3 +1,4 @@
-const OverviewPage = () => <h1 className="text-3xl font-semibold tracking-tight">Overview</h1>;
+import { FinanceScreen } from "@/components/finance-screen";
 
+const OverviewPage = () => <FinanceScreen section="overview" />;
 export default OverviewPage;
