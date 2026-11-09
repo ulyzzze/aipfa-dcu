@@ -1,43 +1,76 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { UserRoundIcon } from "lucide-react";
 import { navigation } from "@/lib/navigation";
+import { useDemo } from "@/components/demo-provider";
+import {
+  Sidebar, SidebarContent, SidebarFooter, SidebarGroup,
+  SidebarGroupContent, SidebarGroupLabel, SidebarHeader,
+  SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarRail,
+  SidebarSeparator, useSidebar,
+} from "@/components/ui/sidebar";
 
-export const Sidebar = () => {
+export const AppSidebar = () => {
   const pathname = usePathname();
+  const { state } = useDemo();
+  const { setOpenMobile } = useSidebar();
+  const closeMobile = () => setOpenMobile(false);
 
   return (
-    <aside data-slot="sidebar" data-testid="sidebar" className="flex shrink-0 flex-col gap-[14px] border border-line bg-white p-6 md:sticky md:top-0 md:h-dvh md:min-h-[700px] md:w-[232px]" aria-label="Workspace">
-      <Link href="/" aria-label="AIPFA home" className="flex h-[70px] shrink-0 items-start gap-[10px]">
-        <span className="rounded-[11px] bg-ink p-[7px]">
-          {/* Assets retain the original Figma dimensions. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/figma/mark.svg" width="20" height="20" alt="" />
-        </span>
-        <span className="text-[25px] leading-[1.4] font-semibold">aipfa</span>
-      </Link>
-      <nav aria-label="Main navigation" className="flex gap-[14px] overflow-x-auto md:flex-col">
-        {navigation.map(({ href, label, icon }) => (
-          <Link key={href} href={href} aria-current={pathname === href ? "page" : undefined} className={`flex h-[46px] shrink-0 items-start gap-3 rounded-xl p-3 text-sm leading-[1.4] transition-colors hover:bg-selected ${pathname === href ? "bg-selected font-semibold" : "bg-white font-normal"}`}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`/figma/${icon}.svg`} width="20" height="20" alt="" />
-            <span className="whitespace-nowrap">{label}</span>
-          </Link>
-        ))}
-      </nav>
-      <div className="hidden min-h-6 flex-1 md:block" />
-      <div className="flex items-start justify-between gap-[14px] md:flex-col">
-        <Link href="/settings" aria-current={pathname === "/settings" ? "page" : undefined} className="flex h-11 items-start gap-3 rounded-md text-sm leading-[1.4] hover:text-muted">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/figma/settings.svg" width="20" height="20" alt="" />
-          Settings
+    <Sidebar collapsible="icon" aria-label="Workspace" data-testid="workspace-sidebar">
+      <SidebarHeader className="px-2 py-5">
+        <Link href="/" onClick={closeMobile} aria-label="AIPFA home" className="flex h-8 items-center gap-3 overflow-hidden rounded-lg px-2 group-data-[collapsible=icon]:px-0">
+          <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary">
+            <Image src="/figma/mark.svg" width={20} height={20} alt="" />
+          </span>
+          <span className="text-2xl font-semibold tracking-tight group-data-[collapsible=icon]:hidden">aipfa</span>
         </Link>
-        <div className="h-12 leading-[1.4]">
-          <p className="text-[13px] font-medium">Ulysse Couchoud</p>
-          <p className="text-[11px] text-muted">Personal workspace</p>
-        </div>
-      </div>
-    </aside>
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Personal finance</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <nav aria-label="Main navigation">
+              <SidebarMenu className="gap-1">
+                {navigation.map(({ href, label, icon }) => (
+                  <SidebarMenuItem key={href}>
+                    <SidebarMenuButton render={<Link href={href} />} isActive={pathname === href} aria-current={pathname === href ? "page" : undefined} tooltip={label} onClick={closeMobile} className="h-10 gap-3">
+                      <Image src={`/figma/${icon}.svg`} width={20} height={20} alt="" className="shrink-0" />
+                      <span>{label}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </nav>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+      <SidebarFooter className="gap-3 pb-4">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton render={<Link href="/settings" />} isActive={pathname === "/settings"} aria-current={pathname === "/settings" ? "page" : undefined} tooltip="Settings" onClick={closeMobile} className="h-10 gap-3">
+              <Image src="/figma/settings.svg" width={20} height={20} alt="" className="shrink-0" />
+              <span>Settings</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+        <SidebarSeparator className="mx-0" />
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton render={<Link href="/settings" />} size="lg" tooltip={`${state.profile.name} · Personal workspace`} aria-label={`${state.profile.name} · Personal workspace`} onClick={closeMobile}>
+              <UserRoundIcon aria-hidden="true" />
+              <span className="flex min-w-0 flex-col gap-0.5 group-data-[collapsible=icon]:hidden">
+                <span className="truncate font-medium">{state.profile.name}</span>
+                <span className="truncate text-xs text-muted-foreground">Personal workspace</span>
+              </span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+      <SidebarRail />
+    </Sidebar>
   );
 };
