@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #171719;
+  --color-muted: #77777e;
+  --color-line: #e5e5e8;
+  --color-selected: #f0f0f3;
+  --font-sans: "Inter", Arial, Helvetica, sans-serif;
+}
+
+body {
+  margin: 0;
+  color: var(--color-ink);
+  background: white;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 4px;
+}
