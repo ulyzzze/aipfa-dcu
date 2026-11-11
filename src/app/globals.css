@@ -19,6 +19,29 @@ body {
   margin: 0;
 }
 
+/* A quiet colour accent along the lower edge of the chat composer. */
+.assistant-composer {
+  isolation: isolate;
+  background: var(--background);
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--foreground) 4%, transparent);
+}
+.assistant-composer::after {
+  content: "";
+  position: absolute;
+  inset: auto 10px 0;
+  height: 3px;
+  border-radius: 100%;
+  background: linear-gradient(90deg, transparent, #81c8bc, #9dbaf0, #c7ace3, #e8bfad, transparent);
+  opacity: 0.75;
+  pointer-events: none;
+}
+.assistant-composer [data-slot="input-group-control"]:focus-visible {
+  outline: none;
+}
+.assistant-mark {
+  background: linear-gradient(140deg, color-mix(in srgb, var(--background) 85%, #81c8bc), color-mix(in srgb, var(--background) 85%, #c7ace3));
+}
+
 :focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 4px;
