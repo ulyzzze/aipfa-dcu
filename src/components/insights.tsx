@@ -60,12 +60,12 @@ export const InsightsScreen = () => {
   return (
     <section data-slot="insights-chat" data-testid="insights-chat" aria-label="Finance assistant" className="mx-auto flex h-[calc(100dvh-23rem)] min-h-[420px] w-full max-w-3xl flex-col sm:min-h-[520px]">
       <div className="mb-4 flex shrink-0 items-center justify-between gap-3">
-        <div className="flex items-center gap-2 text-xs text-muted-foreground"><SparklesIcon aria-hidden className="size-4" /><span>AIPFA assistant</span><Badge variant="outline">Simulated AI</Badge></div>
+        {/* <div className="flex items-center gap-2 text-xs text-muted-foreground"><SparklesIcon aria-hidden className="size-4" /><span>AIPFA assistant</span><Badge variant="outline">Simulated AI</Badge></div> */}
         <Button variant="ghost" size="sm" onClick={newChat} disabled={!messages.length && !draft}><PlusIcon data-icon="inline-start" />New chat</Button>
       </div>
       {messages.length === 0 ? (
         <div className="flex flex-1 flex-col items-center justify-center gap-7 pb-10 pt-6 text-center">
-          <div className="assistant-mark flex size-14 items-center justify-center rounded-2xl"><SparklesIcon aria-hidden className="size-6" /></div>
+          {/* <div className="assistant-mark flex size-14 items-center justify-center rounded-2xl"><SparklesIcon aria-hidden className="size-6" /></div> */}
           <div className="flex flex-col gap-3"><h2 className="text-3xl font-medium tracking-tight sm:text-4xl">Make sense of your money.</h2><p className="text-sm text-muted-foreground">A little clarity for your everyday finances.<br />Ask me about your spending, budgets or savings.</p></div>
           <div className="flex w-full flex-wrap justify-center gap-2">{suggestions.map(({ icon: Icon, label, question }) => <Button key={label} variant="outline" size="sm" onClick={() => send(question)}><Icon data-icon="inline-start" />{label}</Button>)}</div>
         </div>
