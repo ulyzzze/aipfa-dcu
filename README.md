@@ -40,8 +40,12 @@ complets, indépendants de la date réelle du jour.
   modification, suppression avec confirmation, export CSV.
 - **Budgets** : limites par catégorie et par mois, anneaux de progression,
   alertes à 80 % et 100 %, modification des limites.
-- **AI insights** : textes déterministes calculés depuis les données de démo,
-  questions prédéfinies et réponses simulées. Aucun LLM n'est connecté.
+- **AI insights** : chatbot local avec saisie libre, historique de conversation,
+  suggestions, arrêt de réponse et nouveau chat. Réponses déterministes sur les
+  dépenses, catégories, budgets, économies et comparaison au mois précédent,
+  calculées depuis les données du mois sélectionné. Aucun LLM n'est connecté.
+  Entrée envoie le message ; Maj+Entrée ajoute une ligne. La conversation est
+  temporaire et redémarre lorsqu'on change de mois ou quitte la page.
 - **Import data** : exemple interactif ou fichier CSV local, aperçu, validation,
   détection des doublons et import. Maximum 1 MB / 1 000 lignes par fichier.
 - **Settings** : profil local, activation des insights simulés, export complet

@@ -23,9 +23,6 @@ export const AppSidebar = () => {
     <Sidebar collapsible="icon" aria-label="Workspace" data-testid="workspace-sidebar">
       <SidebarHeader className="px-2 py-5">
         <Link href="/" onClick={closeMobile} aria-label="AIPFA home" className="flex h-8 items-center gap-3 overflow-hidden rounded-lg px-2 group-data-[collapsible=icon]:px-0">
-          <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary">
-            <Image src="/figma/mark.svg" width={20} height={20} alt="" />
-          </span>
           <span className="text-2xl font-semibold tracking-tight group-data-[collapsible=icon]:hidden">aipfa</span>
         </Link>
       </SidebarHeader>
