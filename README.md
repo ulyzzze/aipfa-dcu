@@ -28,6 +28,48 @@ npm run build
 npm start
 ```
 
+## Déploiement sur Dokploy
+
+Créer **un seul service Application**, nommé par exemple `aipfa-dcu`, dans un
+projet Dokploy. L'application actuelle n'a besoin ni de base de données, ni de
+Redis, ni de service IA, ni de volume persistant. Les données de démonstration
+sont conservées dans le navigateur de chaque visiteur (`localStorage`) ; elles
+ne sont pas partagées entre utilisateurs ou appareils.
+
+1. Pousser les fichiers de déploiement dans le dépôt Git, puis connecter ce
+   dépôt et la branche souhaitée dans la source du service Application.
+2. Choisir le type de build **Dockerfile** avec ces paramètres :
+
+   | Paramètre | Valeur |
+   | --- | --- |
+   | Build Path (racine du dépôt) | `/` |
+   | Dockerfile | `Dockerfile` |
+   | Docker Context Path | `.` |
+   | Build Stage | laisser vide (dernière étape `runner`) |
+
+3. Aucune variable d'environnement n'est à ajouter : l'image définit déjà
+   `NODE_ENV=production`, `HOSTNAME=0.0.0.0`, `PORT=3000` et
+   `NEXT_TELEMETRY_DISABLED=1`. Conserver le port `3000`.
+4. Dans **Domains**, ajouter le domaine avec **Path** `/`, **Container Port**
+   `3000` et HTTPS avec Let's Encrypt pour un domaine personnel dont le DNS
+   pointe vers le serveur. Le proxy communique en HTTP avec le conteneur.
+   Aucun port hôte n'est à publier dans **Advanced → Ports**.
+5. Lancer **Deploy**, puis vérifier `/`, `/transactions` et `/settings`.
+
+Le Dockerfile construit Next.js en mode `standalone`, copie les fichiers
+statiques, exécute le serveur avec un utilisateur non root et vérifie la santé
+du service sur `/`. La commande de démarrage est déjà incluse : `node server.js`.
+
+Pour reproduire le déploiement localement avec Docker démarré :
+
+```sh
+docker build -t aipfa-dcu .
+docker run --rm -p 3000:3000 --name aipfa-dcu aipfa-dcu
+```
+
+Documentation : [builds Dokploy](https://docs.dokploy.com/docs/core/applications)
+et [configuration des domaines](https://docs.dokploy.com/docs/core/domains).
+
 ## Démonstration frontend
 
 Le workspace contient **144 transactions fictives**, de juin à novembre 2026,

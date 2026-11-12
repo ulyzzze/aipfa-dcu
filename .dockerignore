@@ -1,0 +1,14 @@
+node_modules
+.next
+out
+.git
+.agents
+.codex
+.aws
+.env*
+*.tsbuildinfo
+*.log
+.DS_Store
+PDF
+*.pdf
+tests
